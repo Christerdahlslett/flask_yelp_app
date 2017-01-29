@@ -1,0 +1,62 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+		<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+		<style>
+
+			/* Here follows some custom css. 
+			I have not worked with Bootstrap before, and there was some issue when I created a seperate .css, it didnt override Bootstraps css.
+			Since I didnt have that many changes I just put them up in the head. */ 
+
+			/* --- TYPOGRAPHY --- */ 
+			h1 { font-family: 'Lobster', cursive;}
+
+			/* --- CONTAINERS / DIVS --- */
+			#another { padding-top: 50px; }
+			.jumbotron{
+			height: 100%;
+			background-color: #ffea94;}
+			.container{
+				margin:auto;
+				top: 10%;
+				text-align: center;
+				display: block; }
+			.form-group{width:20%} 
+
+			/* --- FOR MOBILE --- */
+			@media only screen and (max-width: 767px) {.form-group{width:70%}
+		
+		</style>
+	</head>
+	<!-- I feel the most important is to comment the python stuff, so will leave most of the html stuff alone 
+
+			CHANGES.. 
+	--> 
+	<body>
+
+		<div class="jumbotron jumbotron-fluid mb-0">
+			<div class="container">
+				{% if recommendation %} <!-- Here I use a if statement to say that if the script in web.py is runned then the lines underneath will runned. These include a image, and the recommendations which had been in a list from the python script and is now beeing joined togheter. I tried doing this with looping but then none of the recommondations showed up. I also did alot of diffrent experiment to figure out how to present this information without brackets and paranteses.  --> 
+					<img src="/static/map.png" alt="map" height="200" width="200">
+					<h4>The 3 best recommandations I found are as follows:</h4>
+							<b class="pt-5">{{ recommendation|join(', ') }}</b>
+					<div id="another"> <!-- Here is a button which will link back to the "index" by refering to the web.py script. In another div just to make it easier to target for css  --> 
+						<a href="{{ url_for("index") }}" class="btn btn-info">Look up another adress</a>
+					</div>
+				{% else %}<!-- If the script in the web.py is not runned the user will be presented with this section. Which includes a different image, a text that asks if the user wants resturant recommandation. And a form which outputs a "location=" in the URL, when the user writes in their City, country. This "location=" is whats requested by the web.py script to run. Which then runs the yelp_script.py. At the end there is a submit button that adds the location to the url.  --> 
+					<img src="/static/coffee.png" alt="map" height="200" width="200">
+					<h1 class="pb-5"> Hello!</h1> 
+					<h4>Would you like recommandations on resturants at your location? </br> If so please type in your location below!</h4>
+					<div class="mx-auto pt-5">
+						<form action="/" class="form.group">
+							<div class="form-group mx-auto">
+								<input type="text" name="location" placeholder="City, Country" class="form-control">
+							</div><!-- End of form-group div -->
+							<input type="submit" value="Submit" class="btn btn-primary">
+						</form>
+					</div> 
+				{% endif %}<!-- This is the end of the if statement  --> 
+			</div><!-- End of container div --> 
+		</div> <!-- End of Jumbotron div --> 
+	</body>
+</html>		
