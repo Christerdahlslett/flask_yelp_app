@@ -8,7 +8,7 @@ import os
 app = Flask(__name__)
 
 # The route() decorator tells Flask what URL should trigger our function.
-# We define a varaibel called location, which requests the location from the user.
+# We define a varaibel called location, which requests the location from the URL.
 # Location is the argument our yelp_script.py function need to run. 
 # We use an if-statement so we can show the recommendation only when a location is given.
 # This is done by running the function from our yelp_script.py with the location requested earlier. 
@@ -28,7 +28,8 @@ def index():
     return render_template("index.html", recommendation=recommendation)
 
 if __name__ == "__main__":
-    app.run()
+	port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
 
 
 
